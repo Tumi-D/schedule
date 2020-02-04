@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "askForPassword": false,
+            "database": "scheduler",
+            "dialect": "MySQL",
+            "name": "Scheduler",
+            "port": 3306,
+            "server": "localhost",
+            "username": "root"
+        }
+    ]
+}
