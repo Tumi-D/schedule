@@ -42,14 +42,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in schedule" :key="index">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    <tr v-for="(item, index) in schedule" :key="index"></tr>
                     <tr>
                         <td v-if="schedule.length === 0">
                             <!-- <center><h1>Sorry No Schedule</h1></center> -->
@@ -65,12 +58,14 @@
 export default {
     data: () => ({
         labels: [],
-        value: [200, 675, 410, 390, 310, 460, 250, 240, 737, 848],
-        schedule: []
+        value: [],
+        schedule: [],
+        date: "",
+        users: []
     }),
     created() {
         this.initialize();
-        console.log(this.schedule.length);
+        this.getSchedule();
     },
 
     methods: {
@@ -81,6 +76,21 @@ export default {
                     res.data.data.map((roles, index) => {
                         this.labels.push(roles.name);
                     });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        },
+        getSchedule() {
+            axios
+                .get("/api/recentschedule")
+                .then(res => {
+                    this.schedule = res.data.data;
+                    this.date = this.schedule[0].date[0];
+                    this.schedule.map((data, index) => {
+                        this.value.push(data.numbers);
+                    });
+                    console.log(this.schedule);
                 })
                 .catch(err => {
                     console.log(err);

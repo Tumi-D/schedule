@@ -54,4 +54,9 @@ class User extends Authenticatable
             Notification::send($admins, new UserRegistered($model));
         });
     }
+
+    public function locations()
+    {
+        return $this->belongsToMany(Location::class)->wherePivot('selected', 'session');
+    }
 }

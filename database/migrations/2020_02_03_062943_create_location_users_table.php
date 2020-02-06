@@ -13,10 +13,11 @@ class CreateLocationUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('location_users', function (Blueprint $table) {
+        Schema::create('location_user', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('location_id');
             $table->unsignedBigInteger('user_id');
+            $table->enum('role', ["isAdmin", "Normal"])->default("Normal");
             $table->enum('selected', ["done", "session"])->default("session");
             $table->date('meeting');
             $table->timestamps();
@@ -30,6 +31,6 @@ class CreateLocationUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('location_users');
+        Schema::dropIfExists('location_user');
     }
 }

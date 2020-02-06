@@ -22,4 +22,12 @@ class UserResource extends JsonResource
         ];
         return array_merge($defaultData, $additionalData);
     }
+
+    public function with($request)
+    {
+        return [
+            'version' => '1.0.0',
+            'company' => 'Softmasters Group'
+        ];
+    }
 }

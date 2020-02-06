@@ -16,8 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::get('/schedule', 'RunScheduleController@index')->name('schedule');
 Route::get('/sendmail', 'SendMailController@index')->name('mail');
-Route::get('/schedule', 'SendMailController@schedule')->name('schedule');
 Route::get('/assign', 'SendMailController@assign')->name('assign');
 Route::any("/admin/{any?}", 'AdminController@index')->where("any", ".*")->middleware("auth");

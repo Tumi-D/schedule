@@ -2124,24 +2124,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       labels: [],
-      value: [200, 675, 410, 390, 310, 460, 250, 240, 737, 848],
-      schedule: []
+      value: [],
+      schedule: [],
+      date: "",
+      users: []
     };
   },
   created: function created() {
     this.initialize();
-    console.log(this.schedule.length);
+    this.getSchedule();
   },
   methods: {
     initialize: function initialize() {
@@ -2151,6 +2146,22 @@ __webpack_require__.r(__webpack_exports__);
         res.data.data.map(function (roles, index) {
           _this.labels.push(roles.name);
         });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getSchedule: function getSchedule() {
+      var _this2 = this;
+
+      axios.get("/api/recentschedule").then(function (res) {
+        _this2.schedule = res.data.data;
+        _this2.date = _this2.schedule[0].date[0];
+
+        _this2.schedule.map(function (data, index) {
+          _this2.value.push(data.numbers);
+        });
+
+        console.log(_this2.schedule);
       })["catch"](function (err) {
         console.log(err);
       });
@@ -52328,19 +52339,7 @@ var render = function() {
                   "tbody",
                   [
                     _vm._l(_vm.schedule, function(item, index) {
-                      return _c("tr", { key: index }, [
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td")
-                      ])
+                      return _c("tr", { key: index })
                     }),
                     _vm._v(" "),
                     _c("tr", [_vm.schedule.length === 0 ? _c("td") : _vm._e()])

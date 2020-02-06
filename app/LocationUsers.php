@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class LocationUsers extends Model
 {
-    protected $table = "location_users";
+    protected $table = "location_user";
     protected $guarded = [];
 }

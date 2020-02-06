@@ -37,7 +37,7 @@ class SendMailController extends Controller
 
                 ->subject($subject)
 
-                ->attachData($pdf->output(), "invoice.pdf");
+                ->attachData($pdf->output(), "spoof.pdf");
         });
     }
     // public function sendmail(Request $request)
