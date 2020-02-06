@@ -1993,6 +1993,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     source: String
@@ -2005,7 +2009,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    // this.$vuetify.theme.dark = false;
     // console.log(Echo);
     Echo.join("chat").here(function (users) {
       console.log("present user", users);
@@ -2016,6 +2019,12 @@ __webpack_require__.r(__webpack_exports__);
     }); // Echo.private(`App.User.` + this.user.id).notification(notification => {
     //     console.log(notification);
     // });
+  },
+  methods: {
+    changeTheme: function changeTheme() {
+      this.flat = !this.flat;
+      this.$vuetify.theme.dark = this.flat;
+    }
   }
 });
 
@@ -2124,6 +2133,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2131,7 +2154,8 @@ __webpack_require__.r(__webpack_exports__);
       value: [],
       schedule: [],
       date: "",
-      users: []
+      users: [],
+      generated: ""
     };
   },
   created: function created() {
@@ -2143,8 +2167,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/api/locations").then(function (res) {
-        res.data.data.map(function (roles, index) {
-          _this.labels.push(roles.name);
+        res.data.data.map(function (data, index) {
+          _this.labels.push(data.name);
         });
       })["catch"](function (err) {
         console.log(err);
@@ -2154,14 +2178,18 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get("/api/recentschedule").then(function (res) {
-        _this2.schedule = res.data.data;
-        _this2.date = _this2.schedule[0].date[0];
+        _this2.date = res.data.date;
+        res.data.data.map(function (data, index) {
+          _this2.value.push(data.placements.numbers);
 
-        _this2.schedule.map(function (data, index) {
-          _this2.value.push(data.numbers);
+          _this2.schedule.push(data.placements);
         });
 
-        console.log(_this2.schedule);
+        _this2.schedule.map(function (data, index) {
+          _this2.users.push(data.users);
+        });
+
+        console.log(_this2.users);
       })["catch"](function (err) {
         console.log(err);
       });
@@ -52107,6 +52135,12 @@ var render = function() {
               _vm._v(" "),
               _c("v-switch", {
                 staticClass: "ma-6",
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    return _vm.changeTheme()
+                  }
+                },
                 model: {
                   value: _vm.flat,
                   callback: function($$v) {
@@ -52287,7 +52321,11 @@ var render = function() {
             "div",
             { staticClass: "subheading font-weight-light grey--text" },
             [
-              _vm._v("\n            Latest Schedule Placements\n            "),
+              _vm._v(
+                "\n            Latest Schedule Placements for " +
+                  _vm._s(_vm.date) +
+                  "\n            "
+              ),
               _c("v-text-field", {
                 attrs: { solo: "", label: "Search", "append-icon": "search" }
               })
@@ -52335,17 +52373,38 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c(
-                  "tbody",
-                  [
-                    _vm._l(_vm.schedule, function(item, index) {
-                      return _c("tr", { key: index })
+                _c("tbody", [
+                  _c(
+                    "tr",
+                    _vm._l(_vm.users, function(value, index) {
+                      return _c(
+                        "td",
+                        { key: index },
+                        [
+                          _c(
+                            "v-simple-table",
+                            {
+                              staticStyle: { border: "2px" },
+                              attrs: { dark: false }
+                            },
+                            _vm._l(value, function(newvalue, index) {
+                              return _c("tr", { key: index }, [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(newvalue) +
+                                    "\n                            "
+                                )
+                              ])
+                            }),
+                            0
+                          )
+                        ],
+                        1
+                      )
                     }),
-                    _vm._v(" "),
-                    _c("tr", [_vm.schedule.length === 0 ? _c("td") : _vm._e()])
-                  ],
-                  2
-                )
+                    0
+                  )
+                ])
               ]
             },
             proxy: true

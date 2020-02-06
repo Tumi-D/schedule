@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ScheduleCollection;
 use App\Http\Resources\ScheduleResource;
 use App\Location;
 use App\LocationUsers;
@@ -95,6 +96,7 @@ class RunScheduleController extends Controller
     public function recentSchedule()
     {
         $locations = Location::all();
-        return ScheduleResource::collection($locations);
+        // return ScheduleResource::collection($locations);
+        return new ScheduleCollection($locations);
     }
 }

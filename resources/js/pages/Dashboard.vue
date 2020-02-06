@@ -13,7 +13,7 @@
         <v-card-text class="pt-0">
             <div class="title font-weight-light mb-2">Schedule Placements</div>
             <div class="subheading font-weight-light grey--text">
-                Latest Schedule Placements
+                Latest Schedule Placements for {{ date }}
                 <v-text-field
                     solo
                     label="Search"
@@ -42,11 +42,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in schedule" :key="index"></tr>
                     <tr>
-                        <td v-if="schedule.length === 0">
-                            <!-- <center><h1>Sorry No Schedule</h1></center> -->
+                        <!-- <span
+                            v-for="(item, propertyName, index) in schedule"
+                            :key="index"
+                        > -->
+                        <!-- {{ propertyName }}: {{ item }} ({{ index }}) -->
+                        <td v-for="(value, index) in users" :key="index">
+                            <v-simple-table :dark="false" style="border:2px">
+                                <tr
+                                    v-for="(newvalue, index) in value"
+                                    :key="index"
+                                >
+                                    {{
+                                        newvalue
+                                    }}
+                                </tr>
+                            </v-simple-table>
                         </td>
+                        <!-- </span> -->
                     </tr>
                 </tbody>
             </template>
@@ -61,7 +75,8 @@ export default {
         value: [],
         schedule: [],
         date: "",
-        users: []
+        users: [],
+        generated: ""
     }),
     created() {
         this.initialize();
@@ -73,8 +88,8 @@ export default {
             axios
                 .get("/api/locations")
                 .then(res => {
-                    res.data.data.map((roles, index) => {
-                        this.labels.push(roles.name);
+                    res.data.data.map((data, index) => {
+                        this.labels.push(data.name);
                     });
                 })
                 .catch(err => {
@@ -85,12 +100,16 @@ export default {
             axios
                 .get("/api/recentschedule")
                 .then(res => {
-                    this.schedule = res.data.data;
-                    this.date = this.schedule[0].date[0];
-                    this.schedule.map((data, index) => {
-                        this.value.push(data.numbers);
+                    this.date = res.data.date;
+                    res.data.data.map((data, index) => {
+                        this.value.push(data.placements.numbers);
+                        this.schedule.push(data.placements);
                     });
-                    console.log(this.schedule);
+                    this.schedule.map((data, index) => {
+                        this.users.push(data.users);
+                    });
+
+                    console.log(this.users);
                 })
                 .catch(err => {
                     console.log(err);
