@@ -83,9 +83,9 @@ class SendMailController extends Controller
         // }
         // echo "done";
 
-        // $users = User::all()->take(10);
-        // foreach ($users as $key => $user) {
-        //     $user->assignRole('Admin');
-        // }
+        $users = User::all()->take(10);
+        foreach ($users as $key => $user) {
+            $user->assignRole('Admin');
+        }
     }
 }

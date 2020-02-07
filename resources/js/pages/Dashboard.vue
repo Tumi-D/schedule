@@ -38,7 +38,9 @@
                             v-for="(item, index) in labels"
                             :key="index"
                         >
-                            {{ item }}
+                            <v-chip color="green" class="ma-2">
+                                {{ item }}
+                            </v-chip>
                         </th>
                     </tr>
                 </thead>

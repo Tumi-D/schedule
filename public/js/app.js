@@ -2142,6 +2142,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -52360,12 +52362,19 @@ var render = function() {
                           staticStyle: {}
                         },
                         [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(item) +
-                              "\n                    "
+                          _c(
+                            "v-chip",
+                            { staticClass: "ma-2", attrs: { color: "green" } },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(item) +
+                                  "\n                        "
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
                     }),
                     0
