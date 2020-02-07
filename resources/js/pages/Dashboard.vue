@@ -34,6 +34,7 @@
                     <tr>
                         <th
                             class="text-left"
+                            style="font"
                             v-for="(item, index) in labels"
                             :key="index"
                         >
@@ -43,24 +44,18 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <!-- <span
-                            v-for="(item, propertyName, index) in schedule"
-                            :key="index"
-                        > -->
                         <!-- {{ propertyName }}: {{ item }} ({{ index }}) -->
                         <td v-for="(value, index) in users" :key="index">
-                            <v-simple-table :dark="false" style="border:2px">
-                                <tr
-                                    v-for="(newvalue, index) in value"
-                                    :key="index"
-                                >
-                                    {{
-                                        newvalue
-                                    }}
-                                </tr>
-                            </v-simple-table>
+                            <span
+                                v-for="(newvalue, index) in value"
+                                :key="index"
+                            >
+                                <v-chip color="blue" class="ma-2">
+                                    {{ newvalue }}
+                                </v-chip>
+                            </span>
+                            <hr />
                         </td>
-                        <!-- </span> -->
                     </tr>
                 </tbody>
             </template>

@@ -2142,11 +2142,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -52359,7 +52354,11 @@ var render = function() {
                     _vm._l(_vm.labels, function(item, index) {
                       return _c(
                         "th",
-                        { key: index, staticClass: "text-left" },
+                        {
+                          key: index,
+                          staticClass: "text-left",
+                          staticStyle: {}
+                        },
                         [
                           _vm._v(
                             "\n                        " +
@@ -52381,25 +52380,33 @@ var render = function() {
                         "td",
                         { key: index },
                         [
-                          _c(
-                            "v-simple-table",
-                            {
-                              staticStyle: { border: "2px" },
-                              attrs: { dark: false }
-                            },
-                            _vm._l(value, function(newvalue, index) {
-                              return _c("tr", { key: index }, [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(newvalue) +
-                                    "\n                            "
+                          _vm._l(value, function(newvalue, index) {
+                            return _c(
+                              "span",
+                              { key: index },
+                              [
+                                _c(
+                                  "v-chip",
+                                  {
+                                    staticClass: "ma-2",
+                                    attrs: { color: "blue" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(newvalue) +
+                                        "\n                            "
+                                    )
+                                  ]
                                 )
-                              ])
-                            }),
-                            0
-                          )
+                              ],
+                              1
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c("hr")
                         ],
-                        1
+                        2
                       )
                     }),
                     0
