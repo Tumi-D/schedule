@@ -2152,7 +2152,8 @@ __webpack_require__.r(__webpack_exports__);
       schedule: [],
       date: "",
       users: [],
-      generated: ""
+      generated: "",
+      search: ""
     };
   },
   created: function created() {
@@ -2185,10 +2186,24 @@ __webpack_require__.r(__webpack_exports__);
         _this2.schedule.map(function (data, index) {
           _this2.users.push(data.users);
         });
-
-        console.log(_this2.users);
       })["catch"](function (err) {
         console.log(err);
+      });
+    }
+  },
+  computed: {
+    filteredList: function filteredList() {
+      var _this3 = this;
+
+      return this.users.filter(function (user) {
+        return user.toLowerCase().includes(_this3.search.toLowerCase()); // user.filter(use => {
+        //     return use
+        //         .toLowerCase()
+        //         .includes(this.search.toLowerCase());
+        //     console.log(user);
+        // });
+
+        console.log(user);
       });
     }
   }
@@ -52324,7 +52339,11 @@ var render = function() {
                   "\n            "
               ),
               _c("v-text-field", {
-                attrs: { solo: "", label: "Search", "append-icon": "search" }
+                attrs: {
+                  solo: "",
+                  label: "Search By Name",
+                  "append-icon": "search"
+                }
               })
             ],
             1
@@ -53027,12 +53046,12 @@ var render = function() {
                                                       _vm._g(
                                                         {
                                                           attrs: {
-                                                            label: "From",
+                                                            label: "DOB",
                                                             "prepend-icon":
                                                               "event",
                                                             readonly: "",
                                                             value:
-                                                              _vm.fromDateDisp
+                                                              _vm.editedItem.dob
                                                           }
                                                         },
                                                         on

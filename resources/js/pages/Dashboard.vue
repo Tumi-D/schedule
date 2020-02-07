@@ -16,7 +16,7 @@
                 Latest Schedule Placements for {{ date }}
                 <v-text-field
                     solo
-                    label="Search"
+                    label="Search By Name"
                     append-icon="search"
                 ></v-text-field>
             </div>
@@ -62,9 +62,9 @@
                 </tbody>
             </template>
         </v-simple-table>
+        <!-- *141# -->
     </v-card>
 </template>
-
 <script>
 export default {
     data: () => ({
@@ -73,7 +73,8 @@ export default {
         schedule: [],
         date: "",
         users: [],
-        generated: ""
+        generated: "",
+        search: ""
     }),
     created() {
         this.initialize();
@@ -105,12 +106,24 @@ export default {
                     this.schedule.map((data, index) => {
                         this.users.push(data.users);
                     });
-
-                    console.log(this.users);
                 })
                 .catch(err => {
                     console.log(err);
                 });
+        }
+    },
+    computed: {
+        filteredList() {
+            return this.users.filter(user => {
+                return user.toLowerCase().includes(this.search.toLowerCase());
+                // user.filter(use => {
+                //     return use
+                //         .toLowerCase()
+                //         .includes(this.search.toLowerCase());
+                //     console.log(user);
+                // });
+                console.log(user);
+            });
         }
     }
 };

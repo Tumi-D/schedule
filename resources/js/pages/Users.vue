@@ -56,10 +56,10 @@
                                         >
                                             <template v-slot:activator="{ on }">
                                                 <v-text-field
-                                                    label="From"
+                                                    label="DOB"
                                                     prepend-icon="event"
                                                     readonly
-                                                    :value="fromDateDisp"
+                                                    :value="editedItem.dob"
                                                     v-on="on"
                                                 ></v-text-field>
                                             </template>

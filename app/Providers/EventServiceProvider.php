@@ -6,6 +6,10 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use App\Events\SheduleCreatedEvent;
+use App\Listeners\SendUsersEmailOfTeamMates;
+use App\Listeners\GeneratePdfOfShchedule;
+use App\Listeners\SendUsersWhatsAppDocument;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,6 +22,11 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        SheduleCreatedEvent::class => [
+            GeneratePdfOfShchedule::class,
+            SendUsersEmailOfTeamMates::class,
+            SendUsersWhatsAppDocument::class
+        ]
     ];
 
     /**
