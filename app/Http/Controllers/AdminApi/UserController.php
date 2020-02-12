@@ -35,27 +35,29 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         $user =   $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            // 'phone' => 'required'
+            'email' => ['required', 'email'],
+            'phone' => ['required', 'string', 'max:10', 'unique:users'],
+            'dob' => 'required'
         ]);
         // $user = $user + $request['phone'];
         // User::create($user)
         $user = User::create([
             'name' => $request->name,
             "email" => $request->email,
-            'password' => Hash::make($request->password),
-            'phone' => Str::random(10)
+            'password' => Hash::make($request->phone),
+            'phone' => $request->phone,
+            'dob' => $request->dob
         ]);
         if ($request->has('role')) {
             $user->attachRole($request->role['name']);
         }
-        if ($request->has('permission')) {
-            $user->givePermissionTo(collect($request->permissions)->pluck("id")->toArray());
-        }
-        return response(['message' => 'User Created', 'user' => $user]);
+        // if ($request->has('permission')) {
+        //     $user->givePermissionTo(collect($request->permissions)->pluck("id")->toArray());
+        // }
+        return response()->json(['status' => 203, 'message' => 'User Created', 'user' => $user]);
     }
 
     /**
@@ -78,7 +80,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user =  User::find($id);
+        $user->update([
+            'name' => $request->name,
+            "email" => $request->email,
+            'password' => Hash::make($request->phone),
+            'phone' => $request->phone,
+            'dob' => $request->dob
+        ]);
+        if ($request->has('role')) {
+            $user->attachRole($request->role['name']);
+        }
+
+        return response(['message' => 'User Created', 'user' => $user]);
     }
 
     /**

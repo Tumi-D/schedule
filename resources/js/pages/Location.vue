@@ -2,7 +2,7 @@
     <v-data-table
         :headers="headers"
         :items="tableData"
-        sort-by="calories"
+        sort-by="name"
         class="elevation-1"
         :items-per-page="5"
     >
@@ -145,16 +145,13 @@ export default {
 
     methods: {
         initialize() {
-            // this.tableData = [];
             axios
                 .get("/api/locations")
                 .then(res => {
                     this.tableData = res.data.data;
-                    console.log(res.data.data);
-                    // console.log(this.tableData);
                 })
                 .catch(err => {
-                    console.log(err);
+                    console.log(err.message);
                 });
         },
 
@@ -184,13 +181,32 @@ export default {
                     this.tableData[this.editedIndex],
                     this.editedItem
                 );
+                axios
+                    .put(
+                        "/api/locations/" + this.editedItem.id,
+                        this.editedItem
+                    )
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(err => {
+                        console.log(err.message);
+                    });
             } else {
                 this.tableData.push(this.editedItem);
+                console.log(this.editedItem);
+                axios
+                    .post("/api/locations", this.editedItem)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(err => {
+                        console.log(err.message);
+                    });
             }
             this.close();
         }
     }
 };
 </script>
-
 <style></style>

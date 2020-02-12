@@ -4,6 +4,8 @@ namespace App\Http\Controllers\AdminApi;
 
 use App\Http\Controllers\Controller;
 use App\Location;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
@@ -16,7 +18,7 @@ class LocationController extends Controller
     public function index()
     {
         $location = Location::all();
-        return response()->json(["data" => $location]);
+        return response()->json(["status" => 201, "data" => $location]);
     }
 
     /**
@@ -27,18 +29,22 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
+        $priority = "Normal";
         $location =   $request->validate([
             'name' => 'required',
-            'description' => 'required|email',
+            'description' => 'required',
         ]);
         // $user = $user + $request['phone'];
         // User::create($user)
+        if ($request->priority) {
+            $priority = "High";
+        }
         $location = Location::create([
             'name' => $request->name,
             "description" => $request->description,
-            'priority' => $request->priority,
+            'priority' =>  $priority,
         ]);
-        return response()->json(['message' => 'User Created', 'data' => $location]);
+        return response()->json(["status" => 201, 'message' => 'Location Added ', 'data' => $location]);
     }
 
     /**
@@ -60,6 +66,18 @@ class LocationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $priority = "Normal";
+        if ($request->priority) {
+            $priority = "High";
+        }
+
+        $location =  Location::find($id);
+        $location->update([
+            'name' => $request->name,
+            "description" => $request->description,
+            'priority' =>  $priority
+        ]);
+        return response()->json(["status" => 201, 'message' => 'Location Updated', 'data' => $location]);
     }
 
     /**
@@ -72,9 +90,9 @@ class LocationController extends Controller
     {
         try {
             $location =  Location::destroy($id);
-            return response()->json(['message' => 'Location created succesfully', 'data' => $location]);
-        } catch (\Throwable $th) {
-            return response()->json(['error' => 'Request was unsucceesful']);
+            return response()->json(["status" => 201, 'message' => 'Location created succesfully', 'data' => $location]);
+        } catch (ModelNotFoundException $th) {
+            return response()->json(["status" => 405, 'error' => 'Request was unsucceesful']);
         }
     }
 }

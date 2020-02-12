@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/runschedule', 'SendMailController@loadschedule')->name('loadschedule');
 Route::get('/schedule', 'RunScheduleController@index')->name('schedule');
 Route::get('/sendmail', 'SendMailController@index')->name('mail');
 Route::get('/assign', 'SendMailController@assign')->name('assign');

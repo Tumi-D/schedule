@@ -80,4 +80,14 @@
   'nunito' => array(
     'normal' => $fontDir . '/nunito-normal_176125b1b6dc4704cbf0390040859779',
   ),
+  'roboto' => array(
+    '300_italic' => $fontDir . '/roboto-300-italic_f4ae12bda54fc9ba5f9e48b689578908',
+    'italic' => $fontDir . '/roboto-italic_8195011e157d3a377682d918ecaef444',
+    '500_italic' => $fontDir . '/roboto-500-italic_6d3b05813203ec80ec7c8ee056da57a6',
+    'bold_italic' => $fontDir . '/roboto-bold-italic_ae95383317fc48c6f5e0c45b4aba2ce8',
+    '300' => $fontDir . '/roboto-300_fe6b835b8e32bf4538141610f4e4d56f',
+    'normal' => $fontDir . '/roboto-normal_cf99a9d56c411ce3fa8a2fc49c520e74',
+    '500' => $fontDir . '/roboto-500_3fd317e52bc3050f32e57a7e30e4f32c',
+    'bold' => $fontDir . '/roboto-bold_1e996688829091a02d8ce32f4ce56696',
+  ),
 ) ?>

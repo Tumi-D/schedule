@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Location;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Carbon;
 
 class ScheduleCollection extends ResourceCollection
 {
@@ -18,7 +19,7 @@ class ScheduleCollection extends ResourceCollection
         $location = Location::find(2);
         return [
             'data' =>   ScheduleResource::collection($this->collection),
-            'date' => $location->users()->pluck('meeting')->first(),
+            'date' =>   Carbon::parse($location->users()->pluck('meeting')->first())->isoFormat('MMMM Do YYYY'),
             // "generated" =>  $location->users()->pluck('created_at'),
             "author" => "Chris Debrah"
         ];

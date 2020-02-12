@@ -45,32 +45,11 @@
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="12" md="6">
-                                        <v-menu
-                                            v-model="fromDateMenu"
-                                            :close-on-content-click="false"
-                                            :nudge-right="40"
-                                            transition="scale-transition"
-                                            offset-y
-                                            max-width="290px"
-                                            min-width="290px"
-                                        >
-                                            <template v-slot:activator="{ on }">
-                                                <v-text-field
-                                                    label="DOB"
-                                                    prepend-icon="event"
-                                                    readonly
-                                                    :value="editedItem.dob"
-                                                    v-on="on"
-                                                ></v-text-field>
-                                            </template>
-                                            <v-date-picker
-                                                locale="en-in"
-                                                v-model="fromDateVal"
-                                                no-title
-                                                @input="fromDateMenu = false"
-                                                :min="minDate"
-                                            ></v-date-picker>
-                                        </v-menu>
+                                        <v-text-field
+                                            v-model="editedItem.dob"
+                                            label="Date"
+                                            v-mask="dobmask"
+                                        ></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="12" md="12">
                                         <v-select
@@ -78,8 +57,10 @@
                                             :items="allRoles"
                                             attach
                                             chips
+                                            item-text="name"
                                             label="Roles"
                                             multiple
+                                            return-object
                                         ></v-select>
                                     </v-col>
                                     <!-- <v-col cols="12" sm="12" md="6">
@@ -91,7 +72,7 @@
                                             multiple
                                         ></v-select>
                                     </v-col> -->
-                                    <v-col cols="12" sm="12" md="6">
+                                    <!-- <v-col cols="12" sm="12" md="6">
                                         <v-text-field
                                             :append-icon="
                                                 show4
@@ -106,13 +87,13 @@
                                             v-model="password"
                                             @click:append="show4 = !show4"
                                         ></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="12" md="6">
-                                        <!-- <v-text-field
+                                    </v-col> -->
+                                    <!-- <v-col cols="12" sm="12" md="6"> -->
+                                    <!-- <v-text-field
                                             v-model="editedItem.password"
                                             label="Confirm Password"
                                         ></v-text-field> -->
-                                        <v-text-field
+                                    <!-- <v-text-field
                                             :append-icon="
                                                 show3
                                                     ? 'mdi-eye'
@@ -126,7 +107,7 @@
                                             v-model="cpassword"
                                             @click:append="show3 = !show3"
                                         ></v-text-field>
-                                    </v-col>
+                                    </v-col> -->
                                 </v-row>
                             </v-container>
                         </v-card-text>
@@ -155,17 +136,6 @@
             <v-chip class="ma-2" v-else>
                 N/A
             </v-chip>
-
-            <!-- <v-btn
-                class="ma-2"
-                tile
-                outlined
-                rounded
-                color="blue-grey"
-                @click="editItem(item)"
-            >
-                <v-icon left>mdi-eye</v-icon> Show
-            </v-btn> -->
         </template>
         <template v-slot:item.action="{ item }">
             <v-icon small class="mr-2" @click="editItem(item)">
@@ -213,32 +183,33 @@ export default {
             email: "",
             phone: "",
             dob: "",
-            roles: [],
-            password: ""
+            roles: []
+            // password: ""
         },
         defaultItem: {
             name: "",
             email: "",
             phone: "",
             dob: "",
-            password: "",
+            // password: "",
             roles: []
         },
         mask: "###-###-####",
+        dobmask: "####-##-##",
         fromDateMenu: false,
         fromDateVal: null,
-        minDate: "2020-01-05",
-        maxDate: "2019-08-30"
+        minDate: "1960-01-01",
+        maxDate: "2000-01-01"
     }),
 
     computed: {
         formTitle() {
             return this.editedIndex === -1 ? "Add User" : "Edit User";
-        },
-        fromDateDisp() {
-            return this.fromDateVal;
-            // format/do something with date
         }
+        // fromDateDisp() {
+        //     return this.fromDateVal;
+        //     // format/do something with date
+        // }
     },
 
     watch: {
@@ -284,7 +255,7 @@ export default {
 
         deleteItem(item) {
             const index = this.tableData.indexOf(item);
-            // confirm("Are you sure you want to delete this item?") &&
+            // confirm("Are you sure you want to delete this User ?") &&
             //     this.tableData.splice(index, 1);
             this.$swal
                 .fire({
@@ -297,9 +268,10 @@ export default {
                     confirmButtonText: "Yes, delete it!"
                 })
                 .then(result => {
+                    console.log(result);
                     if (result.value) {
                         this.tableData.splice(index, 1);
-                        Swal.fire(
+                        this.$swal.fire(
                             "Deleted!",
                             "User has been deleted.",
                             "success"
@@ -322,8 +294,24 @@ export default {
                     this.tableData[this.editedIndex],
                     this.editedItem
                 );
+                axios
+                    .put("/api/users/" + this.editedItem.id, this.editedItem)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             } else {
                 this.tableData.push(this.editedItem);
+                axios
+                    .post("/api/users", this.editedItem)
+                    .then(response => {
+                        console.log(this.editedItem);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             }
             this.close();
         }

@@ -11,9 +11,11 @@
         </v-sheet>
 
         <v-card-text class="pt-0">
-            <div class="title font-weight-light mb-2">Schedule Placements</div>
+            <div class="title font-weight-light mb-2">
+                Graph Detailing User Schedule placements
+            </div>
             <div class="subheading font-weight-light grey--text">
-                Latest Schedule Placements for {{ date }}
+                Schedule Placements for {{ date }}
                 <v-text-field
                     solo
                     label="Search By Name"

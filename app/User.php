@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Traits\HasRoles;
 // use Spatie\Permission\Traits\HasPermissions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class User extends Authenticatable
@@ -16,6 +17,9 @@ class User extends Authenticatable
     use Notifiable;
     // use HasPermissions;
     use HasRoles;
+    use LogsActivity;
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -24,6 +28,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password', 'phone', 'dob'
     ];
+    protected static $logAttributes = ['name'];
 
     /**
      * The attributes that should be hidden for arrays.

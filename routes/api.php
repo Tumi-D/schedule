@@ -16,9 +16,3 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
-
-Route::apiResource('users', 'AdminApi\UserController');
-Route::apiResource('locations', 'AdminApi\LocationController');
-Route::get('roles', 'AdminApi\UserController@roles');
-Route::get('/recentschedule', 'RunScheduleController@recentSchedule')->name('recentchedule');

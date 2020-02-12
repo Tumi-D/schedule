@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Notifications\ScheduleCreated;
 use Illuminate\Console\Command;
+use App\Packages\Schedule;
 
 class ScheduleUsers extends Command
 {
@@ -37,6 +39,10 @@ class ScheduleUsers extends Command
      */
     public function handle()
     {
-        //
+
+        Schedule::index();
+        // $dompdf->set_paper(DEFAULT_PDF_PAPER_SIZE, 'portrait');
+
+        $this->info('Users Scheduled Succesfully');
     }
 }

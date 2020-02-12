@@ -41,6 +41,15 @@
                         </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
+                    <v-list-item exact :to="{ name: 'activity' }">
+                        <v-list-item-action>
+                            <v-icon>assignment</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Activity</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-divider></v-divider>
                 </v-list>
             </v-navigation-drawer>
 
@@ -55,16 +64,46 @@
                     v-model="flat"
                     class="ma-6"
                 ></v-switch>
-                <v-badge avatar bordered overlap>
-                    <template v-slot:badge>
-                        <v-btn icon x-small>
-                            4
-                        </v-btn>
+
+                <v-menu transition="slide-y-transition" bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-badge avatar bordered overlap>
+                            <template v-slot:badge>
+                                <v-btn icon x-small>
+                                    4
+                                </v-btn>
+                            </template>
+                            <v-btn icon large v-on="on">
+                                <v-icon>mdi-bell</v-icon>
+                            </v-btn>
+                        </v-badge>
                     </template>
-                    <v-btn icon large>
-                        <v-icon>mdi-bell</v-icon>
-                    </v-btn>
-                </v-badge>
+                    <template>
+                        <v-card class="mx-auto" max-width="300" tile>
+                            <v-list shaped>
+                                <v-subheader>REPORTS</v-subheader>
+                                <v-list-item-group
+                                    v-model="item"
+                                    color="primary"
+                                >
+                                    <v-list-item
+                                        v-for="(item, i) in items"
+                                        :key="i"
+                                    >
+                                        <v-list-item-icon>
+                                            <v-icon v-text="item.icon"></v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-content>
+                                            <v-list-item-title
+                                                v-text="item.text"
+                                            ></v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-list-item-group>
+                            </v-list>
+                        </v-card>
+                    </template>
+                </v-menu>
             </v-app-bar>
 
             <v-content>
@@ -92,10 +131,16 @@ export default {
         source: String
     },
     data: () => ({
-        flat: false,
+        flat: true,
         drawer: null,
         lorem:
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque aspernatur totam vitae natus qui dolor, eius, exercitationem delectus quae provident velit iste expedita ad sunt facere laborum voluptatibus iure voluptatem!"
+            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque aspernatur totam vitae natus qui dolor, eius, exercitationem delectus quae provident velit iste expedita ad sunt facere laborum voluptatibus iure voluptatem!",
+        item: 1,
+        items: [
+            { text: "Real-Time", icon: "mdi-clock" },
+            { text: "Audience", icon: "mdi-account" },
+            { text: "Conversions", icon: "mdi-flag" }
+        ]
     }),
     created() {
         // console.log(Echo);

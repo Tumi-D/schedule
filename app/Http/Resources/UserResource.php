@@ -27,7 +27,7 @@ class UserResource extends JsonResource
     {
         return [
             'version' => '1.0.0',
-            'company' => 'Softmasters Group'
+            'author' => 'Chris Debrah'
         ];
     }
 }
