@@ -5,6 +5,7 @@ namespace App\Packages;
 use App\LocationUsers;
 use App\Location;
 use App\Notifications\ScheduleCreated;
+use App\Events\SheduleCreatedEvent;
 use App\User;
 
 
@@ -19,6 +20,7 @@ class Schedule
     public static function index()
     {
         // Update all Previous schedules
+
         $previousSchedule = LocationUsers::where('selected', 'session')->get();
 
         foreach ($previousSchedule as $key => $previous) {
@@ -29,6 +31,11 @@ class Schedule
 
         //Get the next friday
         $date = date('Y-m-d', strtotime('next friday'));
+
+        //Delete any  previous schedule already made for that date
+        $collection = LocationUsers::where('meeting',  $date)->get(['id']);
+        LocationUsers::destroy($collection->toArray());
+
         //Get All Users
         $users = User::all();
 
@@ -94,6 +101,6 @@ class Schedule
                 }
             }
         }
-        event(new  ScheduleCreated);
+        event(new SheduleCreatedEvent());
     }
 }

@@ -29,6 +29,17 @@
             background-color: #f1f1f1;
         }
 
+        .chipb {
+            display: inline-block;
+            padding: 0 25px;
+            height: 20px;
+            font-size: 16px;
+            line-height: 50px;
+            border-radius: 25px;
+            background-color: #002b45;
+        }
+
+
         .container {
             padding-right: 15px;
             padding-left: 15px;
@@ -214,7 +225,7 @@ and also iPads specifically.
 <body>
     <div class="container">
         <div class="jumbotron">
-            <h4 class="display-20">Hello,{{ $user->name}}</h4>
+            <h4 class="display-20">Hello,{{ $user->name  ? " "}}</h4>
             <p class="lead">This is a the programming schedule for {{ $meeting ?? ''}}</p>
             <hr class="my-4">
             @if($admin == $user->name)
@@ -236,16 +247,16 @@ and also iPads specifically.
             <tbody>
                 <tr>
                     <td scope="row" @foreach ($locations as $location )>
-                        <span class="chip"> {{ $location->name }} : </span>
+                        <span class="chipb"> {{ $location->name }} : </span>
                         <span>{{ $location->admin }}</span>
                         <span @foreach($location->users as $user)>
                             @if($user->id == $user->id)
-                            <button type="button" class="btn btn-success btn-sm">
-                                {{ $user->name }}
-                            </button>
+                            <span class="chip"> {{ $user->name }}
+                            </span>
                             @else
-                            <button type="button" class="btn btn-primary btn-sm">
-                                {{ $user->name }}
+                            <span class="chip"> {{ $user->name }}
+                            </span>
+                            {{-- <button type="button" class="btn btn-primary btn-sm"> --}}
                             </button>
                             @endif
                             &nbsp;&nbsp;&nbsp;

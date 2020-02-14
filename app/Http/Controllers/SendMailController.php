@@ -61,7 +61,7 @@ class SendMailController extends Controller
         $pdf = PDF::loadView('emails.porsche', $data);
         // $pdf->setEncryption('password');
 
-        Mail::send('emails.porsche', $data, function ($message) use ($data, $pdf, $to_email, $to_name, $subject) {
+        Mail::send('emails.mailschedule', $data, function ($message) use ($data, $pdf, $to_email, $to_name, $subject) {
             $message->to($to_email, $to_name)
                 ->subject($subject)
                 ->attachData($pdf->output(), "shedule.pdf");
@@ -99,6 +99,11 @@ class SendMailController extends Controller
         $data['meeting'] =  $data['meeting']->isoFormat('MMMM Do YYYY');
         $data['admin'] = User::find($user_id)->name;
         $data['user'] = auth()->user();
+        $data = array('meeting' => $data['meeting'], "admin" => $data['admin'], "user" => auth()->user(), "locations" =>  $data['locations']);
+        $pdf = PDF::loadView('schedule', $data);
+        $pdf->setPaper('A4', 'landscape');
+        // $pdf->set_option('isHtml5ParserEnabled', true);
+        return $pdf->stream('result.pdf');
         return view('schedule')->with("locations", $data);
     }
 }

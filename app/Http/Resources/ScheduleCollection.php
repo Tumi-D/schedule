@@ -16,7 +16,7 @@ class ScheduleCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $location = Location::find(2);
+        $location = Location::find(1);
         return [
             'data' =>   ScheduleResource::collection($this->collection),
             'date' =>   Carbon::parse($location->users()->pluck('meeting')->first())->isoFormat('MMMM Do YYYY'),

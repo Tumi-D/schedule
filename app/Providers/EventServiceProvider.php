@@ -23,9 +23,9 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         SheduleCreatedEvent::class => [
-            // GeneratePdfOfShchedule::class,
-            SendUsersEmailOfTeamMates::class,
-            SendUsersWhatsAppDocument::class
+            GeneratePdfOfShchedule::class,
+            // SendUsersEmailOfTeamMates::class,
+            // SendUsersWhatsAppDocument::class
         ]
     ];
 

@@ -75,18 +75,14 @@
                                                         <td scope="row" @foreach ($locations as $location )>
                                                             <span class="chip"> {{ $location->name }} : </span>
                                                             <span>{{ $location->admin }}</span>
-                                                            <span @foreach($location->users as $user)>
-                                                                @if($user->id == $user->id)
-                                                                <span class="chipb">
-                                                                    {{ $user->name }}
-                                                                </span>
-                                                                @else
-                                                                <span class="chipb">
-                                                                    {{ $user->name }}
-                                                                </span>
-                                                                @endif
-                                                                &nbsp;&nbsp;&nbsp;
-                                                            </span @endforeach>
+                                                            @foreach($location->users as $user)
+                                                            @if($user->id == $user->id)
+                                                            {{ $user->name }}
+                                                            @else
+                                                            {{ $user->name }}
+                                                            @endif
+                                                            &nbsp;&nbsp;&nbsp;
+                                                            @endforeach
                                                             <br />
                                                             <hr />
                                                         </td @endforeach>

@@ -13,72 +13,77 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    {{-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet"> --}}
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <style>
-        <?php include(public_path().'/css/app.css');
-        ?>
-    </style>
-    <style>
-        .chip {
+        .chipb {
             display: inline-block;
             padding: 0 25px;
             height: 50px;
             font-size: 16px;
             line-height: 50px;
             border-radius: 25px;
-            background-color: #f1f1f1;
+            background-color: darkgoldenrod;
+            color: white;
+        }
+
+        .chip {
+            font-weight: bolder;
+            align-items: center;
+            /* font-size: 20px; */
         }
     </style>
 </head>
-<?php ///dd($data) ?>
 
 <body>
     <div class="container">
         <div class="jumbotron">
-            <h4 class="display-20">Hello,{{ $locations['user']->name}}</h4>
-            <p class="lead">This is a the programming schedule for {{ $locations['meeting'] ?? ''}}</p>
+            <h4 class="display-20">Hello,{{ $user->name}}</h4>
+            <p class="lead">This is a the programming schedule for {{ $meeting ?? ''}}</p>
             <hr class="my-4">
-            @if($locations['admin'] == $locations['user']->name)
-            <p>Congrats {{$locations['admin']}} you are the in charge. </p>
+            @if( $admin == $user->name)
+            <p>Congrats {{$admin}} you are the in charge. </p>
             @else
             <p>And I am pleased to inform you that your in charge is <a class="btn btn-danger" href="#"
-                    role="button">{{  $locations['admin'] ?? '' }}</a>
+                    role="button">{{  $admin ?? '' }}</a>
             </p>
             @endif
         </div>
         <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    {{-- @foreach($locations as $location)
-                    <td>{{ $location->name }}</td>
-                    @endforeach --}}
-                </tr>
-            </thead>
+
             <tbody>
+                @foreach ($locations as $location )
+                <?php $i = 0; ?>
+
                 <tr>
-                    <td scope="row" @foreach ($locations['locations'] as $location )>
+                    <td scope="row">
                         <span class="chip"> {{ $location->name }} : </span>
                         <span>{{ $location->admin }}</span>
-                        <span @foreach($location->users as $user)>
-                            @if($user->id == $locations['user']->id)
-                            <button type="button" class="btn btn-success btn-sm">
-                                {{ $user->name }}
-                            </button>
+                        @foreach($location->users as $user)
+                        <span>
+                            @if($user->id == $user->id)
+                            {{-- <button type="button" class="btn btn-success btn-sm"> --}}
+                            {{ $user->name }}
+                            {{-- </button> --}}
                             @else
-                            <button type="button" class="btn btn-primary btn-sm">
-                                {{ $user->name }}
-                            </button>
+                            {{-- <button type="button" class="btn btn-primary btn-sm"> --}}
+                            {{ $user->name }}
+                            {{-- </button> --}}
                             @endif
                             &nbsp;&nbsp;&nbsp;
-                        </span @endforeach>
+                        </span>
+                        @endforeach
+                        <br />
                         <br />
                         <hr />
-                    </td @endforeach>
+                    </td>
+
+
+                    <?php $i++; ?>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
