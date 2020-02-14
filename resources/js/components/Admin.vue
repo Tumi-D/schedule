@@ -103,6 +103,9 @@
                             </v-list>
                         </v-card>
                     </template>
+                    <v-btn icon large @click="logout">
+                        <v-icon>exit_to_app</v-icon>
+                    </v-btn>
                 </v-menu>
             </v-app-bar>
 
@@ -162,6 +165,17 @@ export default {
         changeTheme() {
             this.flat = !this.flat;
             this.$vuetify.theme.dark = this.flat;
+        },
+        logout() {
+            console.log("Here");
+            axios
+                .post("logout")
+                .then(response => {
+                    window.location.replace("https://scheduler.local/");
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     }
 };

@@ -2036,6 +2036,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     source: String
@@ -2074,6 +2077,14 @@ __webpack_require__.r(__webpack_exports__);
     changeTheme: function changeTheme() {
       this.flat = !this.flat;
       this.$vuetify.theme.dark = this.flat;
+    },
+    logout: function logout() {
+      console.log("Here");
+      axios.post("logout").then(function (response) {
+        window.location.replace("https://scheduler.local/");
+      })["catch"](function (err) {
+        console.log(err);
+      });
     }
   }
 });
@@ -52383,7 +52394,17 @@ var render = function() {
                       ],
                       1
                     )
-                  ]
+                  ],
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", large: "" },
+                      on: { click: _vm.logout }
+                    },
+                    [_c("v-icon", [_vm._v("exit_to_app")])],
+                    1
+                  )
                 ],
                 2
               )
