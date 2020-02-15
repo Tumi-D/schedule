@@ -81,7 +81,7 @@
                     <template>
                         <v-card class="mx-auto" max-width="300" tile>
                             <v-list shaped>
-                                <v-subheader>REPORTS</v-subheader>
+                                <v-subheader>NOTIFICATIONS</v-subheader>
                                 <v-list-item-group
                                     v-model="item"
                                     color="primary"
@@ -103,10 +103,10 @@
                             </v-list>
                         </v-card>
                     </template>
-                    <v-btn icon large @click="logout">
-                        <v-icon>exit_to_app</v-icon>
-                    </v-btn>
                 </v-menu>
+                <v-btn icon large @click="logout">
+                    <v-icon>exit_to_app</v-icon>
+                </v-btn>
             </v-app-bar>
 
             <v-content>

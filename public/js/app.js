@@ -52394,19 +52394,16 @@ var render = function() {
                       ],
                       1
                     )
-                  ],
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { icon: "", large: "" },
-                      on: { click: _vm.logout }
-                    },
-                    [_c("v-icon", [_vm._v("exit_to_app")])],
-                    1
-                  )
+                  ]
                 ],
                 2
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                { attrs: { icon: "", large: "" }, on: { click: _vm.logout } },
+                [_c("v-icon", [_vm._v("exit_to_app")])],
+                1
               )
             ],
             1
