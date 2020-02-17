@@ -24,7 +24,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         SheduleCreatedEvent::class => [
             GeneratePdfOfShchedule::class,
-            // SendUsersEmailOfTeamMates::class,
+            SendUsersEmailOfTeamMates::class,
             // SendUsersWhatsAppDocument::class
         ]
     ];
