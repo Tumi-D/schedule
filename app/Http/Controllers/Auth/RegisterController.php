@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -70,14 +71,14 @@ class RegisterController extends Controller
         $user =   User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'phone' => "0546945817",
+            'phone' => Str::random(10),
             'dob' => now(),
             'password' => Hash::make($data['password']),
         ]);
-        // $admins = User::all()->filter(function ($user) {
-        //     return $user->hasRole('Admin');
-        // });
-        // Notification::send($admins, new UserRegistered($user));
+        $admins = User::all()->filter(function ($user) {
+            return $user->hasRole('Admin');
+        });
+        Notification::send($admins, new UserRegistered($user));
         return $user;
     }
 }

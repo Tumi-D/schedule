@@ -1,6 +1,8 @@
 <template>
     <v-card class="mt-4 mx-auto" max-width="90%">
         <v-sheet class="v-sheet--offset mx-auto" color="cyan" elevation="12">
+            <!-- :labels="labels" -->
+
             <v-sparkline
                 :labels="labels"
                 :value="value"
@@ -37,7 +39,7 @@
                         <th
                             class="text-left"
                             style="font"
-                            v-for="(item, index) in labels"
+                            v-for="(item, index) in locations"
                             :key="index"
                         >
                             <v-chip color="green" class="ma-2">
@@ -71,6 +73,7 @@
 export default {
     data: () => ({
         labels: [],
+        locations: [],
         value: [],
         schedule: [],
         date: "",
@@ -89,7 +92,8 @@ export default {
                 .get("/api/locations")
                 .then(res => {
                     res.data.data.map((data, index) => {
-                        this.labels.push(data.name);
+                        this.labels.push(data.id);
+                        this.locations.push(data.name);
                     });
                 })
                 .catch(err => {

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\AdminApi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Notifications\UserRegistered;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Notification;
 
 class UserController extends Controller
 {
@@ -38,10 +40,12 @@ class UserController extends Controller
 
         $user =   $request->validate([
             'name' => 'required',
-            'email' => ['required', 'email'],
-            'phone' => ['required', 'string', 'max:10', 'unique:users'],
+            'email' => ['required', 'email', 'unique:users'],
+            // 'phone' => ['required', 'string', 'max:10', 'unique:users'],
             'dob' => 'required'
         ]);
+        // return response()->json(["status" => 201, 'message' => $user]);
+
         // $user = $user + $request['phone'];
         // User::create($user)
         $user = User::create([
@@ -51,12 +55,22 @@ class UserController extends Controller
             'phone' => $request->phone,
             'dob' => $request->dob
         ]);
+        $admins = User::all()->filter(function ($user) {
+            return $user->hasRole('Admin');
+        });
+        // return response()->json(["status" => 201, 'message' => $user]);
         if ($request->has('role')) {
-            $user->attachRole($request->role['name']);
+            foreach ($request->roles as $key => $role) {
+                $user->assignRole($role);
+            }
+            Notification::send($admins, new UserRegistered($user));
+
+            return response()->json(["status" => 201, 'message' => 'User Created successfuly']);
         }
         // if ($request->has('permission')) {
         //     $user->givePermissionTo(collect($request->permissions)->pluck("id")->toArray());
         // }
+        Notification::send($admins, new UserRegistered($user));
         return response()->json(['status' => 203, 'message' => 'User Created', 'user' => $user]);
     }
 
@@ -80,19 +94,27 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+
         $user =  User::find($id);
-        $user->update([
+
+        $newuser = $user->update([
             'name' => $request->name,
             "email" => $request->email,
             'password' => Hash::make($request->phone),
             'phone' => $request->phone,
             'dob' => $request->dob
         ]);
-        if ($request->has('role')) {
-            $user->attachRole($request->role['name']);
+        if ($request->has('role') && $newuser) {
+            foreach ($request->roles as $key => $role) {
+                // $user->attachRole($role);
+                $user->assignRole($role);
+            }
+            return response()->json(["status" => 201, 'message' => 'User Updated with new role']);
         }
-
-        return response(['message' => 'User Created', 'user' => $user]);
+        if ($newuser) {
+            return response()->json(["status" => 201, 'message' => 'User Updated']);
+        }
     }
 
     /**

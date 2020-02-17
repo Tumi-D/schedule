@@ -165,8 +165,20 @@ export default {
             const index = this.tableData.indexOf(item);
             confirm("Are you sure you want to delete this item?") &&
                 this.tableData.splice(index, 1);
+            axios
+                .delete("/api/locations/" + item.id)
+                .then(response => {
+                    console.log(response);
+                    this.$swal.fire({
+                        title: "Location deleted",
+                        text: response.data.message,
+                        icon: "success"
+                    });
+                })
+                .catch(err => {
+                    console.log(err.message);
+                });
         },
-
         close() {
             this.dialog = false;
             setTimeout(() => {
@@ -188,6 +200,11 @@ export default {
                     )
                     .then(response => {
                         console.log(response);
+                        this.$swal.fire({
+                            title: "Location Updated ",
+                            text: response.data.message,
+                            icon: "success"
+                        });
                     })
                     .catch(err => {
                         console.log(err.message);
@@ -199,6 +216,11 @@ export default {
                     .post("/api/locations", this.editedItem)
                     .then(response => {
                         console.log(response);
+                        this.$swal.fire({
+                            title: "Location Added",
+                            text: response.data.message,
+                            icon: "success"
+                        });
                     })
                     .catch(err => {
                         console.log(err.message);

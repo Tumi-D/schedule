@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -21,12 +20,15 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.8.95/css/materialdesignicons.css">
     <!-- Styles -->
+    <link rel="shortcut icon" href="{{asset('assets/img/favicon.png') }}" type="image/x-icon">
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 <body>
+    <?php //dd(auth()->user()->actions->load('causer')) ?>
     <div id="app">
         {{-- <example-component></example-component> --}}
-        <Admin></Admin>
+        <Admin route={{url('/') }}></Admin>
     </div>
     <script>
         window.user = @json(

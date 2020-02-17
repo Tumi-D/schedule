@@ -90,7 +90,7 @@ class LocationController extends Controller
     {
         try {
             $location =  Location::destroy($id);
-            return response()->json(["status" => 201, 'message' => 'Location created succesfully', 'data' => $location]);
+            return response()->json(["status" => 201, 'message' => 'Location deleted succesfully', 'data' => $location]);
         } catch (ModelNotFoundException $th) {
             return response()->json(["status" => 405, 'error' => 'Request was unsucceesful']);
         }

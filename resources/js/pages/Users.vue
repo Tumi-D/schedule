@@ -297,20 +297,27 @@ export default {
                 axios
                     .put("/api/users/" + this.editedItem.id, this.editedItem)
                     .then(response => {
-                        console.log(response);
+                        // console.log(response);
+                        alert(response.data.message);
                     })
                     .catch(err => {
                         console.log(err);
                     });
             } else {
                 this.tableData.push(this.editedItem);
+                console.log(this.editedItem);
                 axios
                     .post("/api/users", this.editedItem)
                     .then(response => {
-                        console.log(this.editedItem);
+                        console.log(response);
+                        this.$swal.fire({
+                            title: "New User Added",
+                            text: response.data.message,
+                            icon: "success"
+                        });
                     })
                     .catch(err => {
-                        console.log(err);
+                        console.log(err.message);
                     });
             }
             this.close();

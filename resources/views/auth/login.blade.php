@@ -43,25 +43,25 @@
 
                 <form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
                     @csrf
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                     <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
                         <span class="label-input100">Email </span>
                         <input class="input100" type="text" name="email" placeholder="Enter username" autocomplete>
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
                         <span class="focus-input100"></span>
                     </div>
-
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                     <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
                         <span class="label-input100">Password</span>
                         <input class="input100" type="password" name="password" placeholder="Enter password">
-                        @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+
                         <span class="focus-input100"></span>
                     </div>
 
