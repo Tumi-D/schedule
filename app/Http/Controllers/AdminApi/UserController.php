@@ -118,6 +118,35 @@ class UserController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateuser(Request $request, $id)
+    {
+
+        if (auth()->user()->id == $id) {
+
+            $user =  User::find($id);
+            $newuser = $user->update([
+                'name' => $request->name,
+                "email" => $request->email,
+                // 'password' => Hash::make($request->phone),
+                'phone' => $request->phone,
+                'dob' => $request->dob
+            ]);
+            if ($newuser) {
+                return response()->json(["status" => 201, 'message' => 'User Updated with new role']);
+            } else {
+                return response()->json(["status" => 201, 'message' => ' Updated Failed']);
+            }
+        } else {
+            return response()->json(["status" => 201, 'message' => 'Update is not  authorized']);
+        }
+    }
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

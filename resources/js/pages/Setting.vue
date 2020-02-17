@@ -82,6 +82,7 @@
                                     <v-btn
                                         class="mx-0 font-weight-light"
                                         color="success"
+                                        @click="updateUser()"
                                     >
                                         Update Profile
                                     </v-btn>
@@ -111,7 +112,7 @@
                             restart the human foundation in truth And I love you
                             like Kanye loves Kanye I love Rick Owens’ bed design
                             but the back is... -->
-                            God is building movements not monuments by Prophet
+                            God is building movements not monuments Prophet
                             Gideon Danso
                         </p>
                         <!-- <v-btn color="success" rounded class="font-weight-light"
@@ -132,7 +133,14 @@ export default {
         mobile: "",
         email: "",
         address: "",
-        id: 0
+        id: 0,
+        user: {
+            name: "",
+            email: "",
+            phone: "",
+            dob: ""
+            // password: ""
+        }
     }),
     created() {
         this.loaduser();
@@ -145,6 +153,29 @@ export default {
             // this.adddress = window.user.user.adddress;
             this.email = window.user.user.email;
             this.id = window.user.user.id;
+            this.user.name = this.username;
+            this.user.email = this.email;
+            this.user.phone = this.mobile;
+            this.user.dob = this.dob;
+        },
+        updateUser() {
+            axios({
+                method: "put",
+                url: "/api/update/" + this.id,
+                data: {
+                    name: this.username,
+                    email: this.email,
+                    phone: this.mobile,
+                    dob: this.dob
+                }
+            })
+                .then(response => {
+                    console.log(response);
+                    alert(response.data.message);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     }
 };
