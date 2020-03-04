@@ -20,7 +20,6 @@ class Schedule
     public static function index()
     {
         // Update all Previous schedules
-
         $previousSchedule = LocationUsers::where('selected', 'session')->get();
 
         foreach ($previousSchedule as $key => $previous) {

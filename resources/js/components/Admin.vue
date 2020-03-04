@@ -32,6 +32,15 @@
                         </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
+                    <v-list-item exact :to="{ name: 'team' }">
+                        <v-list-item-action>
+                            <v-icon>group</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Teams</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-divider></v-divider>
                     <v-list-item exact :to="{ name: 'setting' }">
                         <v-list-item-action>
                             <v-icon>person</v-icon>

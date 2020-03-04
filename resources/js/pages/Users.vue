@@ -169,6 +169,7 @@ export default {
         ],
         show4: false,
         show3: false,
+        search: "",
         password: "",
         cpassword: "",
         rules: {

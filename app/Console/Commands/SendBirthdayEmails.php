@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\BirthDayMail;
 use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -43,11 +44,13 @@ class SendBirthdayEmails extends Command
         foreach ($users as $user) {
 
             // Send the email to user
-            Mail::queue('emails.birthday', ['user' => $user], function ($mail) use ($user) {
-                $mail->to($user['email'])
-                    // ->from('you@company.com', 'Company')
-                    ->subject('Happy Birthday!');
-            });
+            // Mail::queue('emails.birthday', ['user' => $user], function ($mail) use ($user) {
+            //     $mail->to($user['email'])
+            //         // ->from('you@company.com', 'Company')
+            //         ->subject('Happy Birthday!');
+            // });
+            Mail::to($user['email'])
+                ->queue(new BirthDayMail($user));
         }
         $this->info('Birthday messages sent successfully!');
     }

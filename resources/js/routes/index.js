@@ -8,6 +8,7 @@ import Roles from "../pages/Roles";
 import Permissions from "../pages/Permission";
 import Location from "../pages/Location";
 import Activity from "../pages/activity";
+import Team from "../pages/Team";
 
 const router = new VueRouter({
     mode: "history",
@@ -46,6 +47,11 @@ const router = new VueRouter({
             path: "/admin/activity",
             component: Activity,
             name: "activity"
+        },
+        {
+            path: "/admin/teams",
+            component: Team,
+            name: "team"
         }
     ]
 });

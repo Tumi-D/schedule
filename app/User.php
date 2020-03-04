@@ -67,4 +67,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Location::class)->wherePivot('selected', 'session');
     }
+    public function teams()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }
