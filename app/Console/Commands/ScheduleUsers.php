@@ -39,10 +39,9 @@ class ScheduleUsers extends Command
      */
     public function handle()
     {
-
+        $this->info('Started  Schedule');
         Schedule::index();
         // $dompdf->set_paper(DEFAULT_PDF_PAPER_SIZE, 'portrait');
-
         $this->info('Users Scheduled Succesfully');
     }
 }
